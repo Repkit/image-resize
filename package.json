@@ -1,0 +1,23 @@
+{
+  "name": "imgresapi",
+  "version": "1.0.0",
+  "description": "rest api microservice for image resize",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "image",
+    "resize"
+  ],
+  "author": "Ionut-Andrei Baches",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "sharp": "^0.24.0",
+    "sqlite3": "^4.1.1"
+  }
+}
