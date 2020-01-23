@@ -8,7 +8,7 @@ nodejs image-resize rest api
 
 
 # ENDPOINTS
-/image/stats - give stats about the service
-/image/lfc.jpg?size=250x250 - resize lfc.jpg to 250x250 
-/image/lfc.jpg?size=250x250&format=png - resize lfc.jpg to 250x250 and convert it to png
-/image/stats/lfc.jpg - give stats about particular image lfc.jpg
+- /image/stats - give stats about the service
+- /image/lfc.jpg?size=250x250 - resize lfc.jpg to 250x250 
+- /image/lfc.jpg?size=250x250&format=png - resize lfc.jpg to 250x250 and convert it to png
+- /image/stats/lfc.jpg - give stats about particular image lfc.jpg
