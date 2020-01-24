@@ -55,6 +55,7 @@ exports.resize = (req, res) => {
             
             console.log('CACHE HIT')
             //TODO : store the cache hit per image
+            db.increaseCacheHits(image, size, format)
             
             // set the response content type
             res.type(`image/${format}`)
@@ -80,6 +81,9 @@ exports.resize = (req, res) => {
             // generate folder structure for caching only if format is supported
             !fs.existsSync(cacheimagedir) && fs.mkdirSync(cacheimagedir)
             !fs.existsSync(cacheimagedir + '/' + format) && fs.mkdirSync(cacheimagedir + '/' + format)
+            
+            // init cache in db
+            db.insertCache(image, size, format)
             
             // cache the new image and return it to client
             newimage.toFile(cachefile, function(err){
@@ -153,13 +157,15 @@ exports.stats = (req, res) => {
             "sharp" : sharpStats,
         }
         
-        db.getCacheHits(async function(value){
-            response.cache.hit = await value
-            console.log(value)
+        db.getCacheHits((hits, misses) => {
+            response.cache.hit = hits
+            response.cache.miss = misses
+            // console.log(value)
+            res.type(`application/json`)
+            res.write(JSON.stringify(response))
+            res.end()
         })
         
-        res.write(JSON.stringify(response))
-        res.end()
         return
         
     }catch(e){
