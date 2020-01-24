@@ -4,6 +4,7 @@ const sharp = require('sharp')
 const pathfile = require('path')
 
 const db = require('../models/cache')
+const utils = require('../utils/utils')
 
 const path = __dirname + '/../data/images'
 
@@ -31,8 +32,7 @@ exports.resize = (req, res) => {
         
         // if no format specified we will use the original file format
         if(!format){
-            let i = image.lastIndexOf('.')
-            format = (i < 0) ? '' : image.substr(i+1)
+            format = utils.getExtension(image)
         }
         
         if(-1 == supportedFormats.indexOf(format)){
@@ -203,7 +203,5 @@ exports.imageStats = (req, res) => {
         })
     })
     res.write(JSON.stringify(response))
-    res.end()
-    
-    
+    res.end()   
 }
