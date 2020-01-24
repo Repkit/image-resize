@@ -7,13 +7,13 @@ const db = require('../models/cache')
 const utils = require('../utils/utils')
 
 const path = __dirname + '/../data/images'
+const supportedFormats = ['heic', 'heif', 'jpeg', 'jpg', 'png', 'raw', 'tiff', 'webp']
 
 exports.resize = (req, res) => {
    
     try {
     
         // format supported heic, heif, jpeg, jpg, png, raw, tiff, webp
-        const supportedFormats = ['heic', 'heif', 'jpeg', 'jpg', 'png', 'raw', 'tiff', 'webp']
         
         const image = req.params.image
         const size = req.query.size
@@ -125,7 +125,10 @@ exports.stats = (req, res) => {
             fs.readdirSync(directory).forEach(file => {
                 var pathOfCurrentItem = pathfile.join(directory + '/' + file)
                 if (fs.statSync(pathOfCurrentItem).isFile()) {
-                    totalFilesResized++
+                    let fileext = utils.getExtension(file)
+                    if(-1 != supportedFormats.indexOf(fileext)){
+                        totalFilesResized++
+                    }
                 }
                 else{
                     readDirectorySynchronously(pathOfCurrentItem);
@@ -203,5 +206,7 @@ exports.imageStats = (req, res) => {
         })
     })
     res.write(JSON.stringify(response))
-    res.end()   
+    res.end()
+    
+    
 }
